@@ -23,6 +23,7 @@ namespace CreditCard.Tests
 
         [Test]
         [TestCase("4234567890123456", "012018")]
+        [TestCase("4234567890123456", "012017")]
         public void VerifyCreditCard_ReturnVisaCard_ResultFalse(string cardNumber, string expiryDate)
         {
             var controller = new CreditCardController();
@@ -30,6 +31,16 @@ namespace CreditCard.Tests
             Assert.IsFalse(result.Result);
             Assert.AreEqual("Visa", result.CardType);
         }
-        
+
+        [Test]
+        [TestCase("4234567890123456", "012020")]
+        public void VerifyCreditCard_ReturnVisaCard_ResultTrue(string cardNumber, string expiryDate)
+        {
+            var controller = new CreditCardController();
+            var result = controller.Validation(new CreditCardInfo { CardNumber = cardNumber, ExpiryDate = expiryDate });
+            Assert.IsTrue(result.Result);
+            Assert.AreEqual("Visa", result.CardType);
+        }
+
     }
 }

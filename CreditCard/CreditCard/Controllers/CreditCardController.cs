@@ -31,6 +31,8 @@ namespace CreditCard.Controllers
             {
                 if (Regex.IsMatch(creditCardInfo.CardNumber, "^(4)"))
                 {
+                    IVisaCardValidation vs = new VisaCardValidation();
+                    result = vs.IsCardExpiry(creditCardInfo.ExpiryDate);
                     cardType = CreditType.Visa;
                 }
             }
