@@ -35,6 +35,12 @@ namespace CreditCard.Controllers
                     result = vs.IsCardExpiry(creditCardInfo.ExpiryDate);
                     cardType = CreditType.Visa;
                 }
+                else if (Regex.IsMatch(creditCardInfo.CardNumber, "^(5)"))
+                {
+                    IMasterCardValidation ms = new MasterCardValidation();
+                    result = ms.IsCardExpiry(creditCardInfo.ExpiryDate);
+                    cardType = CreditType.MasterCard;
+                }
             }
            
             return new CreditCardVerificationResult { Result = result, CardType = cardType.ToString() };

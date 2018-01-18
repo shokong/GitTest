@@ -101,6 +101,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BaseValidation.cs" />
+    <Compile Include="Helpers\MasterCardValidation.cs" />
     <Compile Include="Helpers\VisaCardValidation.cs" />
     <Compile Include="Models\CreditCardInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
