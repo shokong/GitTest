@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace CreditCard.Helpers
+﻿namespace CreditCard.Helpers
 {
     public class MasterCardValidation : BaseValidation, IMasterCardValidation
     {
