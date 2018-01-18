@@ -1,9 +1,12 @@
-﻿using CreditCard.Models;
+﻿using CreditCard.Helpers;
+using CreditCard.Models;
+using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -18,9 +21,21 @@ namespace CreditCard.Controllers
         /// <returns>Validation result of credit card</returns>
         [HttpPost]
         [ResponseType(typeof(CreditCardVerificationResult))]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(CreditCardVerificationResult))]
         public CreditCardVerificationResult Validation([FromBody]CreditCardInfo creditCardInfo)
         {
-            return new CreditCardVerificationResult { Result = false, CardType = CreditType.Unknown.ToString() };
+            var cardType = CreditType.Unknown;
+            var result = false;
+            IBaseValidation bv = new BaseValidation();
+            if (bv.IsCardNumberValid(creditCardInfo.CardNumber))
+            {
+                if (Regex.IsMatch(creditCardInfo.CardNumber, "^(4)"))
+                {
+                    cardType = CreditType.Visa;
+                }
+            }
+           
+            return new CreditCardVerificationResult { Result = result, CardType = cardType.ToString() };
         }
     }
 }
