@@ -61,5 +61,25 @@ namespace CreditCard.Tests
             Assert.IsTrue(result.Result);
             Assert.AreEqual("MasterCard", result.CardType);
         }
+
+        [Test]
+        [TestCase("3234567890123456", "0123212020")]
+        public void VerifyCreditCard_ReturnJCBCard_ResultFalse(string cardNumber, string expiryDate)
+        {
+            var controller = new CreditCardController();
+            var result = controller.Validation(new CreditCardInfo { CardNumber = cardNumber, ExpiryDate = expiryDate });
+            Assert.IsFalse(result.Result);
+            Assert.AreEqual("JCB", result.CardType);
+        }
+
+        [Test]
+        [TestCase("3234567890123456", "012221")]
+        public void VerifyCreditCard_ReturnJCBCard_ResultTrue(string cardNumber, string expiryDate)
+        {
+            var controller = new CreditCardController();
+            var result = controller.Validation(new CreditCardInfo { CardNumber = cardNumber, ExpiryDate = expiryDate });
+            Assert.IsTrue(result.Result);
+            Assert.AreEqual("JCB", result.CardType);
+        }
     }
 }

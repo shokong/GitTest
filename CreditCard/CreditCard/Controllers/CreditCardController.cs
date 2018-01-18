@@ -41,6 +41,12 @@ namespace CreditCard.Controllers
                     result = ms.IsCardExpiry(creditCardInfo.ExpiryDate);
                     cardType = CreditType.MasterCard;
                 }
+                else if (Regex.IsMatch(creditCardInfo.CardNumber, "^(3)"))
+                {
+                    IJCBCardValidation jcb = new JCBCardValidation();
+                    result = jcb.IsCardExpiry(creditCardInfo.ExpiryDate);
+                    cardType = CreditType.JCB;
+                }
             }
            
             return new CreditCardVerificationResult { Result = result, CardType = cardType.ToString() };
